@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git url:'https://github.com/anushreegm12/Java_Docker.git', branch: 'main'
+                git url:'https://github.com/Anushreegm12/Java_Docker.git', branch: 'main'
             }
         }
         stage('Build Docker Image') {
