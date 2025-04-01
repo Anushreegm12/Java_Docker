@@ -25,7 +25,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script{
-                    withEnv(["KUBECONFIG=$WORKSPACE/.kubeconfig"] {
+                    withEnv(["KUBECONFIG=$WORKSPACE/.kubeconfig"]) {
                         sh """
                           echo $KUBE_CONFIG>$WORKSPACE/.kubeconfig
                            kubectl apply -f deployment.yaml --kubeconfig=$WORKSPACE/.kubeconfig
