@@ -25,12 +25,12 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script{
-                    withEnv(["KUBECONFIG=$WORKSPACE/.kubeconfig"]) {
-                        writeFile file: "$WORKSPACE/.kubeconfig", text: KUBE_CONFIG
+                    withEnv(["KUBECONFIG=${WORKSPACE}/.kubeconfig"]) {
+                        writeFile file: "${WORKSPACE}/.kubeconfig", text: KUBE_CONFIG
+                        sh 'chmod 600 ${workspace}/.kubeconfig'
                         sh """
-                          echo $KUBE_CONFIG>$WORKSPACE/.kubeconfig
-                           kubectl apply -f deployment.yaml --kubeconfig=$WORKSPACE/.kubeconfig
-                           kubectl apply -f service.yaml --kubeconfig=$WORKSPACE/.kubeconfig
+                           kubectl apply -f deployment.yaml 
+                           kubectl apply -f service.yaml
                         """
                     }
                 }
