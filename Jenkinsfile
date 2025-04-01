@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE = "anushreegm12/java-helloworld:v1"
+        KUBE_CONFIG=credentials('k8s-token')
     }
     stages {
         stage('Checkout Code') {
@@ -23,8 +24,14 @@ pipeline {
         }
         stage('Deploy to Kubernetes') {
             steps {
-                sh 'kubectl apply -f deployment.yaml'
-                sh 'kubectl apply -f service.yaml'
+                script{
+                    withEnv(["KUBECONFIG=$WORKSPACE/.kubeconfig"]{
+                        sh """
+                          echo $KUBE_CONFIG>$WORKSPACE/.kubeconfig
+                           kubectl apply -f deployment.yaml --kubeconfig=$WORKSPACE/.kubeconfig
+                           kubectl apply -f service.yaml --kubeconfig=$WORKSPACE/.kubeconfig
+                    }
+                }
             }
         }
     }
