@@ -26,6 +26,7 @@ pipeline {
             steps {
                 script{
                     withEnv(["KUBECONFIG=$WORKSPACE/.kubeconfig"]) {
+                        writeFile file: "$WORKSPACE/.kubeconfig", text: KUBE_CONFIG
                         sh """
                           echo $KUBE_CONFIG>$WORKSPACE/.kubeconfig
                            kubectl apply -f deployment.yaml --kubeconfig=$WORKSPACE/.kubeconfig
