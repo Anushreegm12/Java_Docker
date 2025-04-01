@@ -27,6 +27,7 @@ pipeline {
                 script{
                     kubernetesDeploy (configs: 'deployment.yaml', kubeconfigId: 'k8s-cred')
                     kubernetesDeploy (configs: 'service.yaml', kubeconfigId: 'k8s-cred')
+                }
             }
         }
     }
