@@ -24,14 +24,10 @@ pipeline {
         }
         stage('Deploy to Kubernetes') {
             steps {
-                script{
-                    withEnv(["KUBECONFIG=${WORKSPACE}/.kubeconfig"]) {
-                        writeFile file: "${WORKSPACE}/.kubeconfig", text: KUBE_CONFIG
-                        sh 'chmod 600 ${workspace}/.kubeconfig'
-                        sh """
-                           kubectl apply -f deployment.yaml 
-                           kubectl apply -f service.yaml
-                        """
+                sshagent(['k8s']){
+                    
+                    script{
+                        sh "ssh ubuntu@192.168.147.128 kubectl apply -f ."
                     }
                 }
             }
