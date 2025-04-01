@@ -24,12 +24,9 @@ pipeline {
         }
         stage('Deploy to Kubernetes') {
             steps {
-                sshagent(['k8s']){
-                    
-                    script{
-                        sh "ssh ubuntu@192.168.147.128 kubectl apply -f ."
-                    }
-                }
+                script{
+                    kubernetesDeploy (configs: 'deployment.yaml', kubeconfigId: 'k8s-cred')
+                    kubernetesDeploy (configs: 'service.yaml', kubeconfigId: 'k8s-cred')
             }
         }
     }
