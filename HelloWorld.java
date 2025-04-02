@@ -4,7 +4,7 @@ public class HelloWorld {
             System.out.println("Hello, World from Java in Docker!");
             try {
                 Thread.sleep(5000);
-            } catch(InterruptException e) {
+            } catch(InterruptedException e) {
                 e.printStackTrace();
             }
         }
